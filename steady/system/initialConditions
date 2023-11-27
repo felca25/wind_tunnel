@@ -7,8 +7,8 @@
 \*---------------------------------------------------------------------------*/
 
 // Geometry
-diameter 0.3;   // m
-chord    0.0324; // m
+diameter 0.22;   // m
+chord    1.294e-02; // m
 // --------------------------------- //
 radius #calc "$diameter / 2";
 // --------------------------------- //
@@ -27,9 +27,9 @@ turbulentOmega       #calc "sqrt($turbulentKE)/(pow(0.09, 0.25)*$chord)";
 
 
 // // Operation
-// TSR      1.60;
+TSR      4.0;
 // // --------------------------------- //
-// rotating_speed_rads #calc "$TSR * $freeStreamVelocity / $radius";
+rotating_speed_rads #calc "$TSR * $freeStreamVelocity / $radius";
 // rotating_speed_rpm  #calc "$rotating_speed_rads * 60 / (2 * pi())";
 // rotating_speed_rps  #calc "$rotating_speed_rads / (2 * pi())";
 // // --------------------------------- //

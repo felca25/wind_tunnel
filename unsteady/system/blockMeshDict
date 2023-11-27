@@ -1,0 +1,85 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  11
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+convertToMeters 1;
+
+// Dimensions of the box
+
+D   0.3; // approximate rotor diameter
+
+Dx  $D;
+Dy  0.6;
+// Dy  #calc "2*$D";
+Dz  $Dy;
+L   3.0;
+// L   #calc "10*$D";
+
+// Number of cells
+
+N   15;
+
+Nx  #calc "(10 * $N)/2";
+Ny  #calc "2 * $N";
+Nz  $Ny;
+
+vertices
+(
+  (#calc "-$Dx"   #calc "-$Dy"  #calc "-$Dz")
+  (#calc "-$Dx"   $Dy           #calc "-$Dz")
+  ($L             $Dy           #calc "-$Dz")
+  ($L             #calc "-$Dy"  #calc "-$Dz")
+  ($L             #calc "-$Dy"  $Dz)
+  ($L             $Dy           $Dz)
+  (#calc "-$Dx"   $Dy           $Dz)
+  (#calc "-$Dx"   #calc "-$Dy"  $Dz)
+);
+
+blocks
+(
+  hex (0 3 2 1 7 4 5 6) ($Nx $Ny $Nz) simpleGrading (1 1 1)
+);
+
+boundary
+(
+  walls
+  {
+    type symmetry;
+    faces
+    (
+      (0 1 2 3)
+      (1 6 5 2)
+      (7 4 5 6)
+      (0 3 4 7)
+    );
+  }
+  inlet
+  {
+    type patch;
+    faces
+    (
+      (0 7 6 1)
+    );
+  }
+  outlet
+  {
+    type patch;
+    faces
+    (
+      (2 5 4 3)
+    );
+  }
+);
+// ************************************************************************* //

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+. $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+runApplication blockMesh
+runApplication surfaceFeatures
+runApplication decomposePar -noFields
+
+# Run in parallel
+runParallel snappyHexMesh -overwrite -parallel
+# mpirun -np 6 snappyHexMesh -overwrite -parallel > log.snappyHexMesh 2>&1
+
+runParallel checkMesh -parallel
+
+runParallel createBaffles -overwrite 
+runParallel splitBaffles -overwrite 
+
+
+runApplication reconstructPar

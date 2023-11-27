@@ -1,0 +1,2 @@
+#!/bin/bash
+rm -rf processor*/*[1-9]*

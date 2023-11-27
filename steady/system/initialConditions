@@ -1,0 +1,39 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  11
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+
+// Geometry
+diameter 0.3;   // m
+chord    0.0324; // m
+// --------------------------------- //
+radius #calc "$diameter / 2";
+// --------------------------------- //
+
+// Flow
+freeStreamVelocity   8;
+flowDensity          1.225; // Air  
+turbulenceIntensity  0.005;
+pressure             0;
+// --------------------------------- //
+flowVelocity         ($freeStreamVelocity 0 0);
+turbulentKE          #calc "(3/2)*pow($turbulenceIntensity*$freeStreamVelocity,2)";
+turbulentOmega       #calc "sqrt($turbulentKE)/(pow(0.09, 0.25)*$chord)";
+// --------------------------------- //
+
+
+
+// // Operation
+// TSR      1.60;
+// // --------------------------------- //
+// rotating_speed_rads #calc "$TSR * $freeStreamVelocity / $radius";
+// rotating_speed_rpm  #calc "$rotating_speed_rads * 60 / (2 * pi())";
+// rotating_speed_rps  #calc "$rotating_speed_rads / (2 * pi())";
+// // --------------------------------- //
+
+
+
+// ************************************************************************* //

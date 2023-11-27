@@ -1,0 +1,109 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  11
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+convertToMeters 1;
+
+// Dimensions of the box
+
+D   0.3; // approximate rotor diameter
+
+Dx  $D;
+mDx #calc "-2 * $Dx";
+Dy  0.6;
+// Dy  #calc "2*$D";
+mDy #calc "-$Dy";
+Dz  $Dy;
+mDz #calc "-$Dz";
+L   3.0;
+// L   #calc "10*$D";
+
+// Number of cells
+
+N   20;
+
+Nx  #calc "(12 * $N) * 0.5";
+Ny  #calc "2 * $N";
+Nz  $Ny;
+
+vertices
+(
+  ($mDx   $mDy  $mDz) //0
+  ($mDx   $Dy   $mDz) //1
+  ($L     $Dy   $mDz) //2
+  ($L     $mDy  $mDz) //3
+  ($L     $mDy  $Dz)  //4
+  ($L     $Dy   $Dz)  //5
+  ($mDx   $Dy   $Dz)  //6
+  ($mDx   $mDy  $Dz)  //7
+);
+
+blocks
+(
+  hex (0 3 2 1 7 4 5 6) ($Nx $Ny $Nz) simpleGrading (1 1 1)
+);
+
+boundary
+(
+  north
+  {
+    type symmetryPlane;
+    faces
+    (
+      (0 1 2 3)
+    );
+  }
+  south
+  {
+    type symmetryPlane;
+    faces
+    (
+      (4 5 6 7)
+    );
+  }
+  top
+  {
+    type symmetryPlane;
+    faces
+    (
+      (1 6 5 2)
+    );
+  }
+  bottom
+  {
+    type symmetryPlane;
+    faces
+    (
+      (0 3 4 7)
+    );
+  }
+  inlet
+  {
+    type patch;
+    faces
+    (
+      (0 7 6 1)
+    );
+  }
+  outlet
+  {
+    type patch;
+    faces
+    (
+      (2 5 4 3)
+    );
+  }
+);
+// ************************************************************************* //

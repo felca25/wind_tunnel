@@ -1,0 +1,232 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  11
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    object      snappyHexMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+#includeEtc "caseDicts/mesh/generation/snappyHexMeshDict.cfg"
+
+castellatedMesh on;
+snap            on;
+addLayers       on;
+
+geometry
+{
+    rotor
+    {
+        type triSurfaceMesh;
+        file "rotor.stl";
+        regions
+        {
+            rotor.stl
+            {
+                 name       rotor;
+            }
+        }
+    }
+
+    innerCylinder
+    {
+        type searchableCylinder;
+        point1 (-0.0725 0 0);
+        point2 (0.0725 0 0);
+        radius 0.1595;
+    }
+    // middleCylinder
+    // {
+    //     type searchableCylinder;
+    //     point1 (-0.145 0 0);
+    //     point2 (2.0 0 0);
+    //     radius #calc "1.5 * 0.145";
+    // }
+};
+
+castellatedMeshControls
+{
+
+    maxLocalCells 100000;
+    maxGlobalCells 8000000;
+    minRefinementCells 0;
+    maxLoadUnbalance 0.10;
+
+    nCellsBetweenLevels 3;
+
+    resolveFeatureAngle 10;
+
+    allowFreeStandingZoneFaces false;
+
+    features
+    (
+     { 
+        file "rotor.eMesh"; 
+        level 6; 
+    }
+
+    );
+
+    refinementSurfaces
+    {
+        // middleCylinder
+        // {
+        //     level (1 1);
+        //     cellZone    middleCylinder;
+        //     faceZone    middleCylinder;
+        //     mode        inside;
+        //     patchInfo
+        //     {
+        //         type patch;
+        //     }
+        // }
+        innerCylinder
+        {
+            level       (2 3);
+            cellZone    cell_inner;
+            faceZone    face_inner;
+            mode        inside;
+            patchInfo
+            {
+                type patch;
+            }
+        }
+        rotor
+        {
+            level (4 6);
+            // cellzone rotor;
+            // faceZone rotor;
+            mode outside;
+            patchInfo
+            {
+                type wall;
+            }
+        }
+    }
+
+    refinementRegions
+    {
+        innerCylinder
+        {
+            mode    inside;
+            level   2;
+        }
+        // middleCylinder
+        // {
+        //     mode    inside;
+        //     level   1;
+        // }
+
+    }
+
+    insidePoint (1.0 1e-5 1e-5); // Offset from (0 0 0) to avoid
+                                     // coinciding with face or edge
+}
+
+snapControls
+{
+    implicitFeatureSnap    true;
+    explicitFeatureSnap    true;
+    multiRegionFeatureSnap false;
+    parallel                true;
+    nSmoothPatch           7;
+    tolerance              0.5;
+    nSolveIter             300;
+    nRelaxIter             15;
+    nFeatureSnapIter       15;
+}
+
+addLayersControls
+{
+    layers
+    {
+        rotor
+        {
+            nSurfaceLayers 20;
+        }
+    }
+
+    relativeSizes true;
+
+    // Expansion factor for layer mesh
+    expansionRatio 1.2;
+
+    // Wanted thickness of final added cell layer. If multiple layers
+    // is the thickness of the layer furthest away from the wall.
+    // Relative to undistorted size of cell outside layer.
+    // See relativeSizes parameter.
+    firstLayerThickness 1e-5;
+
+    // Minimum thickness of cell layer. If for any reason layer
+    // cannot be above minThickness do not add layer.
+    // Relative to undistorted size of cell outside layer.
+    minThickness 5e-6;
+
+    // If points get not extruded do nGrow layers of connected faces that are
+    // also not grown. This helps convergence of the layer addition process
+    // close to features.
+    // Note: changed(corrected) w.r.t 17x! (didn't do anything in 17x)
+    nGrow 0;
+
+    //ADVANCED
+
+    featureAngle 130;
+
+    // Maximum number of snapping relaxation iterations. Should stop
+    // before upon reaching a correct mesh.
+    nRelaxIter 5;
+
+    // Number of smoothing iterations of surface normals
+    nSmoothSurfaceNormals 2;
+
+    // Number of smoothing iterations of interior mesh movement direction
+    nSmoothNormals 5;
+
+    // Smooth layer thickness over surface patches
+    nSmoothThickness 10;
+
+    // Stop layer growth on highly warped cells
+    maxFaceThicknessRatio 0.5;
+
+    // Reduce layer growth where ratio thickness to medial
+    // distance is large
+    maxThicknessToMedialRatio 0.3;
+
+    // Angle used to pick up medial axis points
+    // Note: changed(corrected) w.r.t 17x! 90 degrees corresponds to 130 in 17x.
+    minMedianAxisAngle 90;
+
+
+    // Create buffer region for new layer terminations
+    nBufferCellsNoExtrude 0;
+
+
+    // Overall max number of layer addition iterations. The mesher will exit
+    // if it reaches this number of iterations; possibly with an illegal
+    // mesh.
+    nLayerIter 10;
+
+//  firstLayerThickness 0.01;
+
+//  maxThicknessToMedialRatio 0.6;
+}
+
+writeFlags
+(
+//    scalarLevels
+    layerSets
+    layerFields
+);
+
+// debugFlags (mesh);
+
+
+mergeTolerance 1e-6;
+
+// ************************************************************************* //

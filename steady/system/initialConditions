@@ -6,21 +6,32 @@
      \\/     M anipulation  |
 \*---------------------------------------------------------------------------*/
 
+// Results from BEM
+BEM_diameter 2.2; //m
+BEM_chord 1.294e-1; //m
+BEM_velocity 8; //m/s
+BEM_nu 1.5e-5; //m^2/s
+
+Re #calc"$BEM_velocity * $BEM_chord / $BEM_nu";
 // Geometry
-diameter 0.22;   // m
-chord    1.294e-02; // m
+diameter #calc "$BEM_diameter / 10";   // m
+chord    #calc "$BEM_chord / 10"; // m
 // --------------------------------- //
 radius #calc "$diameter / 2";
 // --------------------------------- //
-
 // Flow
 freeStreamVelocity   8;
 flowDensity          1.225; // Air  
 turbulenceIntensity  0.005;
 pressure             0;
 // --------------------------------- //
+nu #calc "($freeStreamVelocity * $chord) / $Re"; // m^2/s
+// --------------------------------- //
 flowVelocity         ($freeStreamVelocity 0 0);
 turbulentKE          #calc "(3/2)*pow($turbulenceIntensity*$freeStreamVelocity,2)";
+C_mu                0.09;
+l          #calc "0.07*$chord";
+turbulentEpsilon   #calc "pow($C_mu, 0.75)*pow($turbulentKE, 1.5)/$l";
 turbulentOmega       #calc "sqrt($turbulentKE)/(pow(0.09, 0.25)*$chord)";
 // --------------------------------- //
 
@@ -29,7 +40,7 @@ turbulentOmega       #calc "sqrt($turbulentKE)/(pow(0.09, 0.25)*$chord)";
 // // Operation
 TSR      4.0;
 // // --------------------------------- //
-rotating_speed_rads #calc "$TSR * $freeStreamVelocity / $radius";
+rotatingSpeedRads #calc "$TSR * $freeStreamVelocity / $radius";
 // rotating_speed_rpm  #calc "$rotating_speed_rads * 60 / (2 * pi())";
 // rotating_speed_rps  #calc "$rotating_speed_rads / (2 * pi())";
 // // --------------------------------- //

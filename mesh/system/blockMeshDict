@@ -18,7 +18,7 @@ convertToMeters 1;
 
 // Dimensions of the box
 
-D   0.3; // approximate rotor diameter
+D   0.22; // approximate rotor diameter
 
 Dx  $D;
 mDx #calc "-2 * $Dx";
@@ -28,7 +28,7 @@ mDy #calc "-$Dy";
 Dz  $Dy;
 mDz #calc "-$Dz";
 L   3.0;
-// L   #calc "10*$D";
+// L   #calc "6*$D";
 
 // Number of cells
 

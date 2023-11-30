@@ -6,7 +6,7 @@
 
 */*[1-9]*
 */processor*
-*/constant/polymesh
+*/constant/polymesh*
 */constant/geometry/*
 */constant/extendedFeatureEdgeMesh
 log.*

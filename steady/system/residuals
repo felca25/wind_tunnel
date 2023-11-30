@@ -14,12 +14,11 @@ Description
 
 #includeEtc "caseDicts/postProcessing/numerical/residuals.cfg"
 
-fields  (
+fields (
   U
   p
   k
   omega
-  //epsilon
 );
 
 // ************************************************************************* //

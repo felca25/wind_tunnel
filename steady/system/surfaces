@@ -1,0 +1,39 @@
+surfaces
+{
+    type            surfaces;
+    libs            ("libsampling.so");
+    writeControl    writeTime;
+
+    surfaceFormat   vtk;
+    writeFormat     ascii;
+    fields          (p U Q);
+
+    interpolationScheme cellPoint;
+
+    surfaces
+    (
+        xNormal
+        {
+            type            cutPlane;
+            planeType       pointAndNormal;
+            point           (0.44 0 0);
+            normal          (1 0 0);
+            interpolate     true;
+        }
+
+        isoQ
+        {
+            type            isoSurface;
+            isoField        Q;
+            isoValue        1500;
+            interpolate     true;
+        }
+
+        rotor
+        {
+            type            patch;
+            patches         (rotor);
+            interpolate     true;
+        }
+    );
+}

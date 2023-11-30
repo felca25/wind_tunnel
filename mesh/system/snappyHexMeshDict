@@ -39,15 +39,15 @@ geometry
         type searchableCylinder;
         point1 (-0.0725 0 0);
         point2 (0.0725 0 0);
-        radius 0.1595;
+        radius 0.145;
     }
-    // middleCylinder
-    // {
-    //     type searchableCylinder;
-    //     point1 (-0.145 0 0);
-    //     point2 (2.0 0 0);
-    //     radius #calc "1.5 * 0.145";
-    // }
+    middleCylinder
+    {
+        type searchableCylinder;
+        point1 (-0.145 0 0);
+        point2 (1.25 0 0);
+        radius #calc "1.5 * 0.11";
+    }
 };
 
 castellatedMeshControls
@@ -75,17 +75,17 @@ castellatedMeshControls
 
     refinementSurfaces
     {
-        // middleCylinder
-        // {
-        //     level (1 1);
-        //     cellZone    middleCylinder;
-        //     faceZone    middleCylinder;
-        //     mode        inside;
-        //     patchInfo
-        //     {
-        //         type patch;
-        //     }
-        // }
+        middleCylinder
+        {
+            level (1 1);
+            cellZone    middleCylinder;
+            faceZone    middleCylinder;
+            mode        inside;
+            patchInfo
+            {
+                type patch;
+            }
+        }
         innerCylinder
         {
             level       (2 3);
@@ -115,13 +115,14 @@ castellatedMeshControls
         innerCylinder
         {
             mode    inside;
-            level   2;
+            level   3;
         }
-        // middleCylinder
-        // {
-        //     mode    inside;
-        //     level   1;
-        // }
+
+        middleCylinder
+        {
+            mode    inside;
+            level   1;
+        }
 
     }
 
@@ -152,7 +153,7 @@ addLayersControls
         }
     }
 
-    relativeSizes true;
+    relativeSizes false;
 
     // Expansion factor for layer mesh
     expansionRatio 1.2;

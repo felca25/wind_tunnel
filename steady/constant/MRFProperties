@@ -13,7 +13,7 @@ FoamFile
     object      MRFProperties;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-
+#include "../system/initialConditions"
 MRF
 {
     cellZone    cell_inner;
@@ -21,7 +21,7 @@ MRF
     origin      (0 0 0);
     axis        (-1 0 0);
 
-    rpm         2000;
+    rpm         $rotatingSpeedRads;
 }
 
 // ************************************************************************* //

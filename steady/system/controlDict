@@ -53,6 +53,7 @@ functions
   #includeFunc "yPlus";
   #includeFunc "Q";
   #includeFunc "vorticity";
+  #includeFunc "forcesIncompressible"
 }
 
 // ************************************************************************* //

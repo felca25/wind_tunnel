@@ -14,7 +14,7 @@
      \\/     M anipulation  |
 \*---------------------------------------------------------------------------*/
 
-forces
+forcesIncompressible
 {
     type          forces;
 
@@ -23,11 +23,11 @@ forces
     writeControl  timeStep;
     timeInterval  1;
 
-    log           yes;
+    log           true;
 
     patches       (rotor);
     rho           rhoInf;     // Indicates incompressible
-    log           true;
+    // log           true;
     rhoInf        1.293;          // Redundant for incompressible
 
     CofR          (0 0 0);    // Rotation around centre line of propeller

@@ -38,7 +38,7 @@ turbulentOmega       #calc "sqrt($turbulentKE)/(pow(0.09, 0.25)*$chord)";
 
 
 // // Operation
-TSR      2.0;
+TSR      3.5;
 // // --------------------------------- //
 rotatingSpeedRads #calc "$TSR * $freeStreamVelocity / $radius";
 // rotating_speed_rpm  #calc "$rotating_speed_rads * 60 / (2 * pi())";

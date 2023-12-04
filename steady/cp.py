@@ -9,7 +9,7 @@ v_0 = 8.0
 r = 0.11
 # rho air at 25ºC
 rho = 1.225
-purge_before = 0
+purge_before = 2
 
 with open(f'steady/postProcessing/forcesIncompressible/{t_init}/forces.dat', 'r') as f:
     data = f.readlines()
@@ -55,7 +55,7 @@ print("---------------------------------------------")
 print(f"Average: {cp_avg*100:.2f}%")
 print(f"Standard Deviation: {rms*100:.2f}%")
 print("---------------------------------------------")
-x = np.linspace(0, len(cp), len(cp), dtype=int)
+# x = np.linspace(0, len(cp), len(cp), dtype=int)
 plt.rcParams['text.usetex'] = True
 plt.style.use("seaborn-v0_8-muted")
 plt.rcParams['font.family'] = 'Times New Roman'

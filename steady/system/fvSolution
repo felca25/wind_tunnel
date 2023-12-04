@@ -100,8 +100,8 @@ PIMPLE
     correctPhi          yes;
     correctMeshPhi      yes;
     nOuterCorrectors    2;
-    nCorrectors         3;
-    nNonOrthogonalCorrectors 3;
+    nCorrectors         1;
+    nNonOrthogonalCorrectors 2;
 
     residualControl
     {

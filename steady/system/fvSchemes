@@ -43,8 +43,8 @@ divSchemes
 
 laplacianSchemes
 {
-    default         Gauss linear limited corrected 0.555;
-    /* default         Gauss linear limited corrected 0.777; */
+    /* default         Gauss linear limited corrected 0.555; */
+    default         Gauss linear limited corrected 0.777;
 }
 
 interpolationSchemes
@@ -54,8 +54,8 @@ interpolationSchemes
 
 snGradSchemes
 {
-    default         limited corrected 0.555;
-    /* default         limited corrected 0.777; */
+    /* default         limited corrected 0.555; */
+    default         limited corrected 0.777;
 }
 
 wallDist

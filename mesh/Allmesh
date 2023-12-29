@@ -14,6 +14,6 @@ mpirun -np 6 snappyHexMesh -overwrite -parallel > log.snappy 2>&1
 # runParallel splitBaffles -overwrite 
 
 runParallel checkMesh -parallel
-runParallel renumberMesh -overwrite -parallel
+# runParallel renumberMesh -overwrite -parallel
 
 runApplication reconstructPar

@@ -1,0 +1,7 @@
+// Simulations and their respective result directories//
+// TSR, cp, rms, measurements, startTime, endTime //
+1.0, -2.44, 0.04, 100, 100, 200
+3.5, -12.88, 0.05, 100, 1, 758 
+4.0, -14.82, 0.22, 82, 758, - 
+4.5, -16.78 , 0.15, 759, 936, - 
+5.0, -28.77, 4.48, -, 0, - 

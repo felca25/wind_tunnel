@@ -27,8 +27,8 @@ Dy  0.6;
 mDy #calc "-$Dy";
 Dz  $Dy;
 mDz #calc "-$Dz";
-L   3.0;
-// L   #calc "6*$D";
+// L   3.0;
+L   #calc "6*$D";
 
 // Number of cells
 

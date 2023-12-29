@@ -23,7 +23,7 @@ solvers
         tolerance       1e-6;
         relTol          0.01;
         cacheAgglomeration no;
-        minIter         3;
+        minIter         15;
         maxIter         150;
     }
 
@@ -72,7 +72,7 @@ solvers
     {
         solver PBiCGStab;
         preconditioner DILU;
-        minIter         3;
+        minIter         4;
         tolerance       1e-8;
         relTol          0.0;
     }
@@ -86,7 +86,7 @@ solvers
 
 SIMPLE
 {
-    nNonOrthogonalCorrectors 3;
+    nNonOrthogonalCorrectors 2;
     consistent yes;
 }
 
@@ -97,19 +97,20 @@ potentialFlow
 
 PIMPLE
 {
+    momentumPredictor   on;
     correctPhi          yes;
     correctMeshPhi      yes;
-    nOuterCorrectors    2;
-    nCorrectors         1;
-    nNonOrthogonalCorrectors 2;
+    nOuterCorrectors    1;
+    nCorrectors         3;
+    nNonOrthogonalCorrectors 1;
 
     residualControl
     {
-        p               1e-2;
-        U               5e-3;
-        k               4e-3;
-        epsilon         1e-3;
-        omega           2e-3;
+        p               2.5e-6;
+        U               1e-6;
+        k               4e-6;
+        epsilon         1e-6;
+        omega           2e-6;
     }
 }
 
@@ -121,8 +122,10 @@ relaxationFactors
     }
     equations
     {
-        "(U|k|epsilon|omega)"   0.7;
-        "(U|k|epsilon|omega)Final" 0.7;
+        U               0.7;
+        k               0.7;
+        omega           0.7;
+        epsilon         0.7;
     }
 }
 
